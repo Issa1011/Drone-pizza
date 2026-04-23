@@ -1,6 +1,7 @@
 package org.example.dronepizza.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -36,8 +37,26 @@ public class Delivery {
 
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "drone_id", nullable = true)
     private Drone drone;
+
+    public Drone getDrone() {
+        return drone;
+    }
+
+    public void setDrone(Drone drone) {
+        this.drone = drone;
+    }
+
+    public Boolean isStarted(){
+        return drone != null;
+    }
+
+    public Boolean isCompleted(){
+        return actualTime != null;
+    }
+
 
 
     public Pizza getPizza() {

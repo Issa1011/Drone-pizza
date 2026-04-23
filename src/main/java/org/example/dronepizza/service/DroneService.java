@@ -55,4 +55,56 @@ public class DroneService {
     }
 
 
+    // metode der ændre status til ny status på en drone;
+    public ResponseEntity<Drone> enableDrone(Long id) {
+        Drone drone = droneRepository.findById(id).orElse(null);
+
+        if (drone == null) {
+            return ResponseEntity.notFound().build();    //404
+        }
+        if (drone.getStatus() == Status.I_DRIFT) {
+            return ResponseEntity.badRequest().build();          //400
+        }
+
+        drone.setStatus(Status.I_DRIFT);
+        droneRepository.save(drone);
+
+        return ResponseEntity.ok(drone);        //200
+
+    }
+    
+
+    public ResponseEntity<Drone> disableDrone(Long id){
+        Drone drone = droneRepository.findById(id).orElse(null);
+
+        if(drone == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        if (drone.getStatus() == Status.UD_AF_DRIFT){
+            return ResponseEntity.badRequest().build();
+        }
+
+        drone.setStatus(Status.UD_AF_DRIFT);
+        droneRepository.save(drone);
+
+
+        return ResponseEntity.ok(drone);
+    }
+
+    public ResponseEntity<Drone> retireDrone(Long id){
+        Drone drone = droneRepository.findById(id).orElse(null);
+
+        if (drone == null){
+            return ResponseEntity.notFound().build();
+        }
+        if (drone.getStatus() == Status.UDFASET){
+            return ResponseEntity.badRequest().build();
+        }
+
+        drone.setStatus(Status.UDFASET);
+        droneRepository.save(drone);
+
+        return ResponseEntity.ok(drone);
+    }
 }

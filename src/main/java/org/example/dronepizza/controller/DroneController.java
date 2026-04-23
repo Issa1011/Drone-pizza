@@ -6,10 +6,7 @@ import org.example.dronepizza.service.DeliveryService;
 import org.example.dronepizza.service.DroneService;
 import org.example.dronepizza.service.StationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +32,21 @@ public class DroneController {
     @PostMapping("/add")
     public ResponseEntity<Drone> addDrone(){
         return droneService.addDrone();
+    }
+
+    @PutMapping("/{id}/enable")
+    public ResponseEntity<Drone> enableDrone(@PathVariable Long id){
+        return droneService.enableDrone(id);
+    }
+
+    @PutMapping("/{id}/disable")
+    public ResponseEntity<Drone> disableDrone(@PathVariable Long id){
+        return droneService.disableDrone(id);
+    }
+
+    @PutMapping("/{id}/retire")
+    public ResponseEntity<Drone> retireDrone(@PathVariable Long id){
+        return droneService.retireDrone(id);
     }
 
 

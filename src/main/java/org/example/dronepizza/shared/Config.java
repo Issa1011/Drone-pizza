@@ -1,15 +1,14 @@
 package org.example.dronepizza.shared;
 
-import org.example.dronepizza.model.Drone;
-import org.example.dronepizza.model.Pizza;
-import org.example.dronepizza.model.Station;
-import org.example.dronepizza.model.Status;
+import org.example.dronepizza.model.*;
+import org.example.dronepizza.repository.DeliveryRepository;
 import org.example.dronepizza.repository.DroneRepository;
 import org.example.dronepizza.repository.PizzaRepository;
 import org.example.dronepizza.repository.StationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -17,11 +16,13 @@ public class Config implements CommandLineRunner {
     private final PizzaRepository pizzaRepository;
     private final StationRepository stationRepository;
     private final DroneRepository droneRepository;
+    private final DeliveryRepository deliveryRepository;
 
-    public Config(PizzaRepository pizzaRepository, StationRepository stationRepository, DroneRepository droneRepository){
+    public Config(PizzaRepository pizzaRepository, StationRepository stationRepository, DroneRepository droneRepository, DeliveryRepository deliveryRepository){
         this.pizzaRepository = pizzaRepository;
         this.stationRepository = stationRepository;
         this.droneRepository = droneRepository;
+        this.deliveryRepository = deliveryRepository;
     }
 
     @Override
@@ -91,6 +92,31 @@ public class Config implements CommandLineRunner {
         droneRepository.save(drone3);
 
 
+        Delivery delivery1 = new Delivery();
+        delivery1.setAdresse("Nørrebros Runddel");
+        delivery1.setExpectedTime(LocalDateTime.of(2026, 4, 12, 13, 30, 0));
+        delivery1.setActualTime(LocalDateTime.of(2026, 4, 12, 14, 0, 0));
+        delivery1.setDrone(drone1);
+        delivery1.isStarted();
+        delivery1.setPizza(pizza2);
+        deliveryRepository.save(delivery1);
+
+
+        Delivery delivery2 = new Delivery();
+        delivery2.setAdresse("Sankt hans torv");
+        delivery2.setExpectedTime(LocalDateTime.of(2026, 4, 12, 13, 30, 0));
+        delivery2.setActualTime(LocalDateTime.of(2026, 4, 12, 14, 0, 0));
+        delivery2.isStarted();
+        delivery2.setPizza(pizza2);
+        deliveryRepository.save(delivery2);
+
+        Delivery delivery3 = new Delivery();
+        delivery3.setAdresse("Østerbrogade 1");
+        delivery3.setExpectedTime(LocalDateTime.of(2026, 4, 12, 13, 30, 0));
+        delivery3.setDrone(drone1); // har drone
+// actualTime sættes IKKE - ikke afsluttet endnu
+        delivery3.setPizza(pizza4);
+        deliveryRepository.save(delivery3);
     }
 
 }

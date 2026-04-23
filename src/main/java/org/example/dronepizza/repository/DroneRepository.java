@@ -1,4 +1,9 @@
 package org.example.dronepizza.repository;
 
-public interface DroneRepository {
+
+import org.example.dronepizza.model.Drone;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DroneRepository extends JpaRepository<Drone, Long> {
+
 }

@@ -59,9 +59,6 @@ public class DeliveryController {
         return deliveryService.delivered(deliveryId);
 
     }
-
-
-
-
+""
 
 }
